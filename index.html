@@ -27,8 +27,13 @@
             class="on-card-logo"
           />
           <p class="on-card-number">0000 0000 0000 0000</p>
-          <p class="on-card-name">Jane Appleseed</p>
-          <p class="on-card-date">00/00</p>
+          <p class="on-card-name">Patricia Soto</p>
+          <p class="on-card-date">
+            <span class="on-card-exp-month">00</span>/<span
+              class="on-card-exp-year"
+              >00</span
+            >
+          </p>
         </div>
         <div class="card card-back">
           <img
@@ -48,17 +53,21 @@
           id="cardholder-name"
           class="cardholder-name"
           name="cardholderName"
-          placeholder="e.g. Jane Appleseed"
+          placeholder="e.g. Patricia Soto"
         />
+        <span class="error-message error-name">Name is required</span>
         <label for="card-number" class="card-number-label">Card Number</label>
         <input
-          type="number"
+          type="text"
           id="card-number"
           class="card-number"
           name="cardNumber"
           placeholder="e.g. 1234 5678 9123 0000"
         />
-        <label for="exp-month" class="exp-date-label">Exp. Date (MM/YY)</label>
+        <span class="error-number error-message"
+          >Wrong format, numbers only</span
+        >
+        <label class="exp-date-label">Exp. Date (MM/YY)</label>
         <input
           type="number"
           id="exp-month"
@@ -67,6 +76,7 @@
           class="exp-month"
           aria-label="expiration month"
         />
+        <span class="error-date error-message">Can't be blank</span>
         <input
           type="number"
           id="exp-year"
@@ -83,7 +93,8 @@
           name="cvcNumber"
           placeholder="e.g. 123"
         />
-        <button type="submit">Confirm</button>
+        <span class="error-cvc error-message">Can't be blank</span>
+        <button type="submit" class="submit-btn">Confirm</button>
       </form>
     </div>
 
@@ -95,5 +106,6 @@
       <p>We've added your card details</p>
       <button type="button">Continue</button>
     </div>
+    <script src="script.js"></script>
   </body>
 </html>
