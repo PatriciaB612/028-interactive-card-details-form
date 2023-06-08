@@ -54,6 +54,7 @@
           class="cardholder-name"
           name="cardholderName"
           placeholder="e.g. Patricia Soto"
+          required
         />
         <span class="error-message error-name">Name is required</span>
         <label for="card-number" class="card-number-label">Card Number</label>
@@ -63,6 +64,7 @@
           class="card-number"
           name="cardNumber"
           placeholder="e.g. 1234 5678 9123 0000"
+          required
         />
         <span class="error-number error-message"
           >Wrong format, numbers only</span
@@ -75,6 +77,7 @@
           placeholder="MM"
           class="exp-month"
           aria-label="expiration month"
+          required
         />
         <span class="error-date error-message">Can't be blank</span>
         <input
@@ -84,6 +87,7 @@
           placeholder="YY"
           class="exp-year"
           aria-label="expiration year"
+          required
         />
         <label for="cvc-number" class="cvc-number-label">CVC</label>
         <input
@@ -92,6 +96,7 @@
           class="cvc-number"
           name="cvcNumber"
           placeholder="e.g. 123"
+          required
         />
         <span class="error-cvc error-message">Can't be blank</span>
         <button type="submit" class="submit-btn">Confirm</button>

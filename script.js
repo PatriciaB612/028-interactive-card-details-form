@@ -1,133 +1,88 @@
+//const inputs = document.querySelectorAll('input')
+let classes = (classes) => document.querySelector(classes)
 //user info
-const cardName = document.querySelector('.cardholder-name')
-const cardNumber = document.querySelector('.card-number')
-const expMonth = document.querySelector('.exp-month')
-const expYear = document.querySelector('.exp-year')
-const cvcNumber = document.querySelector('.cvc-number')
-const inputs = document.querySelectorAll('input')
-//on card elements
-const onCardNumber = document.querySelector('.on-card-number')
-const onCardName = document.querySelector('.on-card-name')
-const onCardExpMonth = document.querySelector('.on-card-exp-month')
-const onCardExpYear = document.querySelector('.on-card-exp-year')
-const onCardCvc = document.querySelector('.on-card-cvc')
-//error messages
-const nameError = document.querySelector('.error-name')
-const numberError = document.querySelector('.error-number')
-const dateError = document.querySelector('.error-date')
-const cvcError = document.querySelector('.error-cvc')
+let cardName = classes('.cardholder-name'),
+  cardNumber = classes('.card-number'),
+  expMonth = classes('.exp-month'),
+  expYear = classes('.exp-year'),
+  cvcNumber = classes('.cvc-number'),
+  //on card elements
+  onCardNumber = classes('.on-card-number'),
+  onCardName = classes('.on-card-name'),
+  onCardExpMonth = classes('.on-card-exp-month'),
+  onCardExpYear = classes('.on-card-exp-year'),
+  onCardCvc = classes('.on-card-cvc'),
+  //error messages
+  nameError = classes('.error-name'),
+  numberError = classes('.error-number'),
+  dateError = classes('.error-date'),
+  cvcError = classes('.error-cvc'),
+  thankYouMsg = classes('.thank-you-message')
 //form and submit btn
-const submitBtn = document.querySelector('.submit-btn')
+submitBtn = classes('.submit-btn')
 const form = document.querySelector('form')
+
+isValid = false
 
 //render info on card previews
 
-form.addEventListener('submit', function (e) {
-  e.preventDefault()
-})
-
-function renderInfo() {
-  cardNumber.addEventListener('keyup', function () {
-    onCardNumber.innerText = cardNumber.value
-  })
-
-  cardName.addEventListener('keyup', function () {
-    onCardName.innerText = cardName.value
-  })
-
-  expMonth.addEventListener('keyup', function () {
-    onCardExpMonth.innerText = expMonth.value
-  })
-
-  expYear.addEventListener('keyup', function () {
-    onCardExpYear.innerText = expYear.value
-  })
-
-  cvcNumber.addEventListener('keyup', function () {
-    onCardCvc.innerText = cvcNumber.value
+function renderInfo(input, onCardInfo) {
+  input.addEventListener('keyup', function () {
+    onCardInfo.innerText = input.value
   })
 }
+
+renderInfo(cardName, onCardName)
+renderInfo(cardNumber, onCardNumber)
+renderInfo(cvcNumber, onCardCvc)
+renderInfo(expMonth, onCardExpMonth)
+renderInfo(expYear, onCardExpYear)
 
 //show error messages when submitting
 
-function validateName() {
-  cardName.addEventListener('keyup', function () {
-    if (cardName.value === '') {
-      nameError.style.color = 'red'
-      cardName.style.border = '1px solid red'
-      return false
-    } else {
-      nameError.style.color = 'white'
-      cardName.style.border = 'revert'
-      return true
+function validateInput(input, error, message) {
+  input.addEventListener('keyup', function () {
+    if (input.value.trim() === '') {
+      error.textContent = message
+      error.style.color = 'red'
+      input.style.border = '1px solid red'
+      isValid = false
+    } else if (input.value.length > 0) {
+      error.style.color = 'white'
+      input.style.border = 'revert'
+      isValid = true
     }
   })
 }
 
-function validateNumber() {
+validateInput(cardName, nameError, 'Name is required')
+validateInput(cvcNumber, cvcError, "Can't be blank")
+validateInput(expMonth, dateError, "Can't be blank")
+validateInput(expYear, dateError, "Can't be blank")
+
+function validateNumberFormat() {
   cardNumber.addEventListener('keyup', function () {
     if (!cardNumber.value.match('^[0-9]+$')) {
-      numberError.textContent = 'Wrong format, numbers only'
+      numberError.textContent = 'Wrong format, numbers only. No spaces.'
       numberError.style.color = 'red'
       cardNumber.style.border = '1px solid red'
-      return false
-    } else if (cardNumber.value === '') {
-      numberError.textContent = "Can't be blank"
-      return false
+      isValid = false
     } else {
       numberError.style.color = 'white'
       cardNumber.style.border = 'revert'
-      return true
+      isValid = true
     }
   })
 }
 
-function validateExpMonth() {
-  expMonth.addEventListener('keyup', function () {
-    if (expMonth.value === '') {
-      dateError.style.color = 'red'
-      expMonth.style.border = '1px solid red'
-      return false
-    } else {
-      dateError.style.color = 'white'
-      expMonth.style.border = 'revert'
-      return true
-    }
-  })
-}
+validateNumberFormat()
 
-function validateExpYear() {
-  expYear.addEventListener('keyup', function () {
-    if (expYear.value === '') {
-      dateError.style.color = 'red'
-      expYear.style.border = '1px solid red'
-      return false
-    } else {
-      dateError.style.color = 'white'
-      expYear.style.border = 'revert'
-      return true
-    }
-  })
-}
+//form submission
 
-function validateCvcNumber() {
-  cvcNumber.addEventListener('keyup', function () {
-    if (cvcNumber.value === '') {
-      cvcError.style.color = 'red'
-      cvcNumber.style.border = '1px solid red'
-      return false
-    } else {
-      cvcError.style.color = 'white'
-      cvcNumber.style.border = 'revert'
-      return true
-    }
-  })
-}
-
-validateName()
-validateNumber()
-validateExpMonth()
-validateExpYear()
-validateCvcNumber()
-
-renderInfo()
+form.addEventListener('submit', function (e) {
+  if (isValid === false) {
+    e.preventDefault()
+  } else if (isValid === true) {
+    form.submit()
+  }
+})
